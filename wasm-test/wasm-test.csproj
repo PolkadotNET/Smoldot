@@ -10,11 +10,17 @@
 
     <ItemGroup>
       <PackageReference Include="NLog" Version="5.2.2" />
-      <PackageReference Include="wasmtime" Version="10.0.0" />
+      <PackageReference Include="wasmtime" Version="14.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <None Update="smoldot_light_wasm.wasm">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="westend.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

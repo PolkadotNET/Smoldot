@@ -1,25 +1,39 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //
 
-using System.Runtime.InteropServices;
-using wasm_test;
 using wasm_test.WasmInstance;
-using Wasmtime;
-
-Console.WriteLine("Hello, World!");
-using var engine = new Engine();
-using var module = Module.FromFile(engine, "./smoldot_light_wasm.wasm");
-using var linker = new Linker(engine);
-using var store = new Store(engine);
-
-const string FunctionName = "init";
-const string ModuleName = "smoldot";
-const string MemoryName = "memory";
+var cts = new CancellationTokenSource();
 
 var instance = new WasmInstance();
-instance.Init(5);
 
-await Task.Delay(5000);
-instance.AdvanceExecution();
+instance.OnRpcResponse += Console.WriteLine;
+var runTask = instance.Run(cts.Token);
+
+// add chain etc :)
+var chainId = instance.AddChain();
+
+// await Task.Delay(10000);
+instance.Send(chainId, "{\"id\":5,\"jsonrpc\":\"2.0\",\"method\":\"rpc_methods\",\"params\":[]}");
 
 Console.ReadKey();
+cts.Cancel();
+await runTask;
+Console.WriteLine("Bye!");
+
+
+public class Chain
+{
+    public delegate void Received(string json);
+
+    public event Received OnReceived;
+    
+    public void Send(string json)
+    {
+        
+    }
+
+    public void Remove()
+    {
+        
+    }
+}
