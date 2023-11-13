@@ -1,8 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wasm-test", "wasm-test\wasm-test.csproj", "{220940BA-0911-4BCA-AEED-B255B91B2F41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmoldotNET", "SmoldotNET\SmoldotNET.csproj", "{220940BA-0911-4BCA-AEED-B255B91B2F41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{8768CF6E-5B26-42B1-88FA-B99084FE010F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolkadotNET.RPC", "PolkadotNET.RPC\PolkadotNET.RPC.csproj", "{0E2E3FE2-FFF1-4A62-9179-E428C1C1FCAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab", "Lab\Lab.csproj", "{6CC5854F-2BFF-4799-9E95-B9769A96E3A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{8768CF6E-5B26-42B1-88FA-B99084FE010F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8768CF6E-5B26-42B1-88FA-B99084FE010F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8768CF6E-5B26-42B1-88FA-B99084FE010F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E2E3FE2-FFF1-4A62-9179-E428C1C1FCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E2E3FE2-FFF1-4A62-9179-E428C1C1FCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E2E3FE2-FFF1-4A62-9179-E428C1C1FCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E2E3FE2-FFF1-4A62-9179-E428C1C1FCAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CC5854F-2BFF-4799-9E95-B9769A96E3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CC5854F-2BFF-4799-9E95-B9769A96E3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CC5854F-2BFF-4799-9E95-B9769A96E3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CC5854F-2BFF-4799-9E95-B9769A96E3A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

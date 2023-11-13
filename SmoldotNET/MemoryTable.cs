@@ -1,9 +1,14 @@
-namespace wasm_test.WasmInstance;
+namespace SmoldotNET;
 
-public class MemoryTable
+public interface IMemoryTable
 {
-    // 1MB
-    private const int BUFFER_SIZE = 1024 * 1024;
+    byte[] GetBuffer(int index);
+    void Release(int tableIndex);
+    int Allocate(byte[] buffer);
+}
+
+public class MemoryTable : IMemoryTable
+{
     private readonly List<byte[]> _table = new();
     private readonly List<int> _allocations = new();
     
@@ -14,7 +19,7 @@ public class MemoryTable
         _allocations.RemoveAll(a => a == tableIndex);
     }
     
-    public int AllocateBuffer(byte[] buffer)
+    public int Allocate(byte[] buffer)
     {
         // check for previous allocations and use them instead if there are any
         for (var i = 0; i < _allocations.Count; i++)
@@ -33,5 +38,4 @@ public class MemoryTable
         _allocations.Add(_table.Count - 1);
         return _allocations.Count - 1;
     }
-    
 }

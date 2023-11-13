@@ -1,4 +1,4 @@
-using wasm_test.WasmInstance;
+using SmoldotNET.Connection;
 
 namespace TestProject1;
 

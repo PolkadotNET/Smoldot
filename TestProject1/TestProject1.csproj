@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\wasm-test\wasm-test.csproj" />
+      <ProjectReference Include="..\SmoldotNET\SmoldotNET.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace wasm_test.WasmInstance;
+namespace SmoldotNET.Connection;
 
 public struct ConnectionType
 {
