@@ -15,10 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="smoldot_light_wasm.wasm">
+      <None Update="NLog.config">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="NLog.config">
+      <None Update="smoldot_light_wasm.wasm">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

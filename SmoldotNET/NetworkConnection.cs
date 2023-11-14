@@ -16,7 +16,7 @@ public class NetworkConnection
     private readonly int _id;
     private byte[] _readBuffer = new byte[MaxReadBufferSize];
 
-    
+
     private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
 
     public NetworkConnection(NetworkStream stream, CancellationTokenSource cancellationTokenSource, int id)
@@ -40,7 +40,9 @@ public class NetworkConnection
     }
 
     public delegate void DataWritten(int id, int len);
+
     public delegate void ConnectionReset(int id);
+
     public delegate void DataReceived(int id, byte[] data);
 
 
@@ -48,22 +50,26 @@ public class NetworkConnection
     public event ConnectionReset? OnConnectionReset;
     public event DataReceived? OnDataReceived;
 
-    private async Task WriteTask(CancellationToken ct)
+    private Task WriteTask(CancellationToken ct)
     {
-        while (!ct.IsCancellationRequested)
+        return Task.Run(async () =>
         {
-            if (_outgoingQueue.TryDequeue(out var data))
+            while (!ct.IsCancellationRequested)
             {
-                _occupied -= data.Length;
-                await Stream.WriteAsync(data, ct);
+                if (_outgoingQueue.TryDequeue(out var data))
+                {
+                    _occupied -= data.Length;
+                    await Stream.WriteAsync(data, ct);
 
-                OnDataWritten?.Invoke(_id, data.Length);
+                    // _logger.Debug($"{_id} (OUT, {data.Length}): {BitConverter.ToString(data)}");
+                    OnDataWritten?.Invoke(_id, data.Length);
+                }
+                else
+                {
+                    await Task.Delay(1000, ct);
+                }
             }
-            else
-            {
-                await Task.Delay(50, ct);
-            }
-        }
+        }, ct);
     }
 
 
@@ -77,7 +83,7 @@ public class NetworkConnection
                 if (len == 0)
                 {
                     OnConnectionReset?.Invoke(_id);
-                    _logger.Info($"network connection closed");
+                    _logger.Info($"network connection (id: {_id}) closed (EOF)");
                     // cancel so that the writeTask gets stopped as well.
                     CancellationTokenSource.Cancel();
                     return;
@@ -90,7 +96,7 @@ public class NetworkConnection
             )
             {
                 OnConnectionReset?.Invoke(_id);
-                _logger.Info($"network connection closed");
+                _logger.Error($"network connection (id: {_id}) closed: {ex.Message}");
 
                 // cancel so that the writeTask gets stopped as well.
                 CancellationTokenSource.Cancel();

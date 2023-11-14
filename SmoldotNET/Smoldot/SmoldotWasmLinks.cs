@@ -98,7 +98,11 @@ public class SmoldotWasmLinks : ISmoldotWasmLinks
         // we dont care about this currently?
     }
 
-    public void ResetConnection(int connectionId) => _connectionManager.ResetConnection(connectionId);
+    public void ResetConnection(int connectionId)
+    {
+        _logger.Warn($"Reset Connection ({connectionId})");
+        _connectionManager.ResetConnection(connectionId);
+    }
 
     public void StartTimer(double duration) => _timerMap.Add(duration);
 
@@ -108,7 +112,11 @@ public class SmoldotWasmLinks : ISmoldotWasmLinks
         _connectionManager.QueueOutbound(connectionId, memory.ToArray());
     }
 
-    public void StreamSendClose(int connectionId, int streamId) => _connectionManager.ResetConnection(connectionId);
+    public void StreamSendClose(int connectionId, int streamId)
+    {
+        _logger.Warn("StreamSendClose?");
+        // _connectionManager.ResetConnection(connectionId);
+    }
 
     public int BufferSize(int index) => _memoryTable.GetBuffer(index).Length;
 
@@ -118,6 +126,7 @@ public class SmoldotWasmLinks : ISmoldotWasmLinks
     public void Panic(Caller caller, int messagePointer, int messageLength)
     {
         var error = caller.ReadStringFromMemory(messagePointer, messageLength);
+        _logger.Error($"wasm paniced with '{error}'");
         throw new Exception($"wasm paniced with '{error}'");
     }
 

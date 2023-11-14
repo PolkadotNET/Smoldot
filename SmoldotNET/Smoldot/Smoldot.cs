@@ -47,19 +47,34 @@ public class Smoldot
                 _wasmFunctions.TimerFinished();
 
             // connection manager
+            var allocatedIds = new List<int>();
             foreach (var (connectionId, reason) in _connectionManager.ResetConnections())
-                _wasmFunctions.ConnectionReset(connectionId, _memoryTable.Allocate(Encoding.UTF8.GetBytes(reason)));
+            {
+                var bufferId = _memoryTable.Allocate(Encoding.UTF8.GetBytes(reason));
+                _wasmFunctions.ConnectionReset(connectionId, bufferId);
+                allocatedIds.Add(bufferId);
+            }
+                
 
             foreach (var (connectionId, additionalCapacity) in _connectionManager.StreamCapacityUpdates())
                 _wasmFunctions.StreamWriteableBytes(connectionId, 0, additionalCapacity);
 
             foreach (var (connectionId, data) in _connectionManager.IncomingData())
-                _wasmFunctions.StreamMessage(connectionId, 0, _memoryTable.Allocate(data));
+            {
+                var bufferId = _memoryTable.Allocate(data);
+                _wasmFunctions.StreamMessage(connectionId, 0, bufferId);
+                allocatedIds.Add(bufferId);
+            }
 
             foreach (var chain in _chains)
                 TryAndGetResponse(chain);
             
-            await Task.Delay(50, ct);
+            // foreach (var allocatedId in allocatedIds)
+            // {
+            //     _memoryTable.Release(allocatedId);
+            // }
+            
+            await Task.Delay(10, ct);
         }
     }
 

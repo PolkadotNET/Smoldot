@@ -56,7 +56,7 @@ public class SmoldotWasmFunctions : ISmoldotWasmFunctions
         int connectionId,
         int streamId,
         int additionalBytes
-    ) =>
+    )  {
         _instance.GetAction<
             int, int, int
         >("stream_writable_bytes")!.Invoke(
@@ -64,6 +64,7 @@ public class SmoldotWasmFunctions : ISmoldotWasmFunctions
             streamId,
             additionalBytes
         );
+    }
 
     public void StreamMessage(
         int connectionId,
