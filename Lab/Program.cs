@@ -2,6 +2,7 @@
 
 using PolkadotNET.RPC.Namespaces;
 using PolkadotNET.RPC.Services.ChainHead;
+using PolkadotNET.RPC.Services.ChainSpec;
 using SmoldotNET.Smoldot;
 
 try
@@ -13,13 +14,11 @@ try
 
     var chain = smoldot.AddChain(File.ReadAllText("./polkadot.json"));
     var rpcClient = new SmoldotJsonRpcClient(chain);
-    rpcClient.OnNotification += Console.WriteLine;
 
-    var chainHeadService = new ChainHeadService(rpcClient);
-    var sId = await chainHeadService.FollowSubscription(new FollowParameters(false));
-
-
-    Console.WriteLine(sId);
+    var rpc = new ChainSpecService(rpcClient);
+    var name = await rpc.ChainName();
+    
+    Console.WriteLine(name);
     await runTask;
     Console.ReadKey();
     cts.Cancel();
