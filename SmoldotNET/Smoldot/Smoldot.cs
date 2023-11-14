@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using SmoldotNET.WasmMemory.Structs;
 using Wasmtime;
 using MemoryExtensions = SmoldotNET.WasmMemory.MemoryExtensions;
 
@@ -106,15 +107,13 @@ public class Smoldot
     private void TryAndGetResponse(int chainId)
     {
         var ptr = _wasmFunctions.JsonRpcResponsesPeek(chainId);
-
         var memory = _instance.GetMemory(MemoryExtensions.MemoryName)!;
-        var responsePtr = (uint)memory.ReadInt32(ptr);
-        var responseLen = memory.ReadInt32(ptr + 4);
+        var responseInfo = memory.Read<JsonRpcResponseInfo>(ptr);
 
-        if (responseLen == 0)
+        if (responseInfo.Length == 0)
             return;
 
-        var response = memory.ReadString(responsePtr, responseLen);
+        var response = memory.ReadString(responseInfo.Pointer, responseInfo.Length);
         OnRpcResponse?.Invoke(chainId, response);
 
         _wasmFunctions.JsonRpcPop(chainId);
