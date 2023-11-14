@@ -11,8 +11,8 @@ try
     var smoldot = new Smoldot("./smoldot_light_wasm.wasm");
     var runTask = smoldot.Run(cts.Token);
 
-    var westend = smoldot.AddChain(File.ReadAllText("./polkadot.json"));
-    var rpcClient = new SmoldotJsonRpcClient(westend);
+    var chain = smoldot.AddChain(File.ReadAllText("./polkadot.json"));
+    var rpcClient = new SmoldotJsonRpcClient(chain);
     rpcClient.OnNotification += Console.WriteLine;
 
     var chainHeadService = new ChainHeadService(rpcClient);
@@ -24,7 +24,6 @@ try
     Console.ReadKey();
     cts.Cancel();
     Console.WriteLine("Bye!");
-
 }
 catch (Exception ex)
 {
