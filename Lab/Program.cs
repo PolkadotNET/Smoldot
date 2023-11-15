@@ -2,6 +2,7 @@
 
 using PolkadotNET.RPC.Namespaces;
 using PolkadotNET.RPC.Services.ChainHead;
+using PolkadotNET.RPC.Services.ChainHead.Parameters;
 using PolkadotNET.RPC.Services.ChainSpec;
 using SmoldotNET.Smoldot;
 
@@ -15,10 +16,24 @@ try
     var chain = smoldot.AddChain(File.ReadAllText("./polkadot.json"));
     var rpcClient = new SmoldotJsonRpcClient(chain);
 
-    var rpc = new ChainSpecService(rpcClient);
-    var name = await rpc.ChainName();
+    var rpc = new ChainHeadService(rpcClient);
+    rpc.OnInitialized += (id, initialized) => Console.WriteLine("Follow initialized!");
+    rpc.OnBestBlockChanged +=
+        (subscription, changed) => Console.WriteLine($"Best Block Changed: {changed.BestBlockHash}");
+    rpc.OnFinalized += (subscription, finalized) =>
+    {
+        foreach (var finalizedFinalizedBlockHash in finalized.FinalizedBlockHashes)
+        {
+            Console.WriteLine($"OnFinalized: {finalizedFinalizedBlockHash}");
+        }
+
+    };
+    rpc.OnStop += (id, stop) => Console.WriteLine("oh no.. we stopped?");
+
+    Console.ReadKey();
+    var sid = await rpc.FollowSubscription(new FollowParameters(false));
+    Console.WriteLine(sid);
     
-    Console.WriteLine(name);
     await runTask;
     Console.ReadKey();
     cts.Cancel();

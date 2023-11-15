@@ -78,11 +78,13 @@ public class SmoldotWasmLinks : ISmoldotWasmLinks
     public void ConnectionStreamOpen(int connectionId)
     {
         // currently only single-stream connections are supported, thus we dont make use of this.
+        // throw exception if this gets called inside the wasm?
     }
 
     public void ConnectionStreamReset(int connectionId, int streamId)
     {
         // currently only single-stream connections are supported, thus we dont make use of this.
+        // throw exception if this gets called inside the wasm?
     }
 
     private const int ConnectionTypeIsSupported = 1;

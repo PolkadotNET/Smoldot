@@ -48,6 +48,15 @@ public class SmoldotJsonRpcClient
         return SendAsync<TResponse>(id, new Request<object>(method, id.ToString()).ToJson());
     }
 
+    public Task<TResponse> SendAsync<TRequest, TResponse>(string method, TRequest payload)
+    {
+        var id = _messageCounter++;
+        return SendAsync<TResponse>(id, new Request<TRequest>(method, id.ToString())
+        {
+            Params = payload
+        }.ToJson());
+    }
+    
     private Task<TResponse> SendAsync<TResponse>(int id, string request)
     {
         return Task.Run(() =>
@@ -72,14 +81,5 @@ public class SmoldotJsonRpcClient
 
             return jsonResponse.FromJson<SuccessResponse<TResponse>>().Result;
         });
-    }
-
-    public Task<TResponse> SendAsync<TRequest, TResponse>(string method, TRequest payload)
-    {
-        var id = _messageCounter++;
-        return SendAsync<TResponse>(id, new Request<TRequest>(method, id.ToString())
-        {
-            Params = payload
-        }.ToJson());
     }
 }
