@@ -1,0 +1,24 @@
+name: Publish NuGet Packages
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Dotnet Restore
+        run: dotnet restore
+      - name: Test
+        run: dotnet test
+      - name: Build
+        run: dotnet build ./PolkadotNET.Smoldot/ --configuration Release -p:VersionPrefix=$RELEASE_VERSION
+      - name: Pack
+        run: dotnet pack ./PolkadotNET.Smoldot/ --configuration Release -p:VersionPrefix=$RELEASE_VERSION
+      - name: Publish Nuget nuget.org
+        run: dotnet nuget push "./PolkadotNET.Smoldot/bin/Release/PolkadotNET.Smoldot.$RELEASE_VERSION.nupkg" --api-key ${{ secrets.NUGET_POLKADOTNET }} --source "nuget"

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolkadotNET.Smoldot", "PolkadotNET.Smoldot\PolkadotNET.Smoldot.csproj", "{220940BA-0911-4BCA-AEED-B255B91B2F41}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolkadotNET.Smoldot.Tests", "PolkadotNET.Smoldot.Tests\PolkadotNET.Smoldot.Tests.csproj", "{6176A2DA-F951-4ADF-9FB2-EB4AD6110D15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{220940BA-0911-4BCA-AEED-B255B91B2F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{220940BA-0911-4BCA-AEED-B255B91B2F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{220940BA-0911-4BCA-AEED-B255B91B2F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6176A2DA-F951-4ADF-9FB2-EB4AD6110D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6176A2DA-F951-4ADF-9FB2-EB4AD6110D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6176A2DA-F951-4ADF-9FB2-EB4AD6110D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6176A2DA-F951-4ADF-9FB2-EB4AD6110D15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
