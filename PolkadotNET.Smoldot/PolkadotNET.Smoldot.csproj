@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <RootNamespace>PolkadotNET.Smoldot</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>PolkadotNET.Smoldot</AssemblyName>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>0.0.2</Version>
+        <Authors>Daniel Moos</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NLog" Version="5.2.2" />
+      <PackageReference Include="ServiceStack.Text" Version="6.11.0" />
+      <PackageReference Include="wasmtime" Version="14.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="smoldot_light_wasm.wasm">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <PackageReference Include="Wasmtime" Version="10.0.0" />-->
+<!--    </ItemGroup>-->
+
+</Project>
