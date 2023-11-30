@@ -1,6 +1,4 @@
-﻿using NLog;
-
-namespace PolkadotNET.Smoldot;
+﻿namespace PolkadotNET.Smoldot;
 
 public interface ITimerMap
 {
@@ -11,7 +9,6 @@ public interface ITimerMap
 public class TimerMap : ITimerMap
 {
     private readonly List<double> _timers = new();
-    private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
     
     public void Add(double duration)
     {

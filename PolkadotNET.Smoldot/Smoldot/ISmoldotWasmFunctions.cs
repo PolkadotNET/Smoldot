@@ -14,6 +14,8 @@ public interface ISmoldotWasmFunctions
         int relayChainsBufferIndex
     );
 
+    public void RemoveChain(int chainId);
+
     public int ChainIsOk(int chainId);
 
     // JsonRpcInterface

@@ -88,8 +88,19 @@ public class Smoldot
         var relayChainBuffer = _memoryTable.Allocate(Array.Empty<byte>());
 
         var chainId = _wasmFunctions.AddChain(specBuffer, databaseContentBuffer, 5, 5, relayChainBuffer);
+
+        var chainIsOkResult = _wasmFunctions.ChainIsOk(chainId);
+        if (chainIsOkResult != 1)
+            throw new AddChainException();
+        
         _chains.Add(chainId);
         return new Chain(this, chainId);
+    }
+
+    public void RemoveChain(int chainId)
+    {
+        _wasmFunctions.RemoveChain(chainId);
+        _chains.Remove(chainId);
     }
 
     public int Send(int chainId, string message)
@@ -119,5 +130,4 @@ public class Smoldot
 
         _wasmFunctions.JsonRpcPop(chainId);
     }
-    
 }

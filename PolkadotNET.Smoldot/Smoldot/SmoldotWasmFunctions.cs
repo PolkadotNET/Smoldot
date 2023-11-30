@@ -37,6 +37,9 @@ public class SmoldotWasmFunctions : ISmoldotWasmFunctions
             relayChainsBufferIndex
         );
 
+    public void RemoveChain(int chainId) =>
+        _instance.GetAction<int>("remove_chain")!.Invoke(chainId);
+
     public int ChainIsOk(int chainId) =>
         _instance.GetFunction<int, int>("chain_is_ok")!.Invoke(chainId);
 
@@ -56,7 +59,8 @@ public class SmoldotWasmFunctions : ISmoldotWasmFunctions
         int connectionId,
         int streamId,
         int additionalBytes
-    )  {
+    )
+    {
         _instance.GetAction<
             int, int, int
         >("stream_writable_bytes")!.Invoke(

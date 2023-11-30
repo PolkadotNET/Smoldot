@@ -57,29 +57,6 @@ public class ConnectionManager : IConnectionManager
     public void CreateConnection(int connectionId, string address, ushort port)
     {
         _ = EnqueueConnection(connectionId, address, port);
-        // var tcpClient = new TcpClient();
-        // try
-        // {
-        //     tcpClient.Connect(address, port);
-        //
-        //     var networkStream = tcpClient.GetStream();
-        //     var tokenSource = new CancellationTokenSource();
-        //     var connection = new NetworkConnection(networkStream, tokenSource, connectionId);
-        //
-        //     connection.OnConnectionReset += (id) => _connectionResets.Enqueue((id, "generic reason"));
-        //     connection.OnDataWritten += (id, len) => _capacityUpdates.Enqueue((id, len));
-        //     connection.OnDataReceived += (id, data) => _inboundQueue.Enqueue((id, data));
-        //     
-        //     _networkConnections.Add(connectionId, connection);
-        //     _capacityUpdates.Enqueue((connectionId, NetworkConnection.MaxWriteBufferSize));
-        //     _logger.Info($"new network connection added: {address}:{port} ({connectionId})");
-        // }
-        // catch (Exception ex) when (
-        //     ex is SocketException or ObjectDisposedException or InvalidOperationException
-        // )
-        // {
-        //     _connectionResets.Enqueue((connectionId, "generic reason")); 
-        // }
     }
 
     public void QueueOutbound(int connectionId, byte[] data)

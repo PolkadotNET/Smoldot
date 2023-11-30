@@ -1,10 +1,14 @@
 ﻿namespace PolkadotNET.Smoldot.Smoldot;
 
-public class Chain
+public class Chain : IDisposable
 {
     private readonly Smoldot _smoldot;
     private readonly int _id;
 
+    /// <summary>
+    /// emits if the underlying smoldot instance has a json-rpc message (reply or notification) ready
+    /// for this particular chain
+    /// </summary>
     public event Received? OnReceived;
 
     public delegate void Received(string json);
@@ -23,7 +27,10 @@ public class Chain
         };
     }
 
-
+    /// <summary>
+    /// Submit a JSON RPC request to the underlying smoldot wasm instance
+    /// </summary>
+    /// <param name="json"></param>
     public void Send(string json)
     {
         _smoldot.Send(_id, json);
@@ -34,7 +41,8 @@ public class Chain
         OnReceived?.Invoke(response);
     }
 
-    public void Remove()
+    public void Dispose()
     {
+        _smoldot.RemoveChain(_id);
     }
 }
