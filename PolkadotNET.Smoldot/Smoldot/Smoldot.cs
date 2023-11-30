@@ -54,7 +54,6 @@ public class Smoldot
                 _wasmFunctions.ConnectionReset(connectionId, bufferId);
                 allocatedIds.Add(bufferId);
             }
-                
 
             foreach (var (connectionId, additionalCapacity) in _connectionManager.StreamCapacityUpdates())
                 _wasmFunctions.StreamWriteableBytes(connectionId, 0, additionalCapacity);
@@ -69,10 +68,10 @@ public class Smoldot
             foreach (var chain in _chains)
                 TryAndGetResponse(chain);
             
-            foreach (var allocatedId in allocatedIds)
-            {
-                _memoryTable.Release(allocatedId);
-            }
+            // foreach (var allocatedId in allocatedIds)
+            // {
+            //     _memoryTable.Release(allocatedId);
+            // }
             
             await Task.Delay(10, ct);
         }
